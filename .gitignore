@@ -1,3 +1,4 @@
 .vagrant/
-config.json
+*.json
+*.box
 *.swp
