@@ -29,7 +29,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	config.vm.hostname    = "devenv"
 	config.vm.box         = "chef/debian-7.4"
 	config.vm.network       "private_network", ip: "192.168.56.2"
-	if setup.has_key? "syncedFolders"
+	if setup.has_key? 'syncedFolders'
 		setup["syncedFolders"].each do |sync|
 			config.vm.synced_folder sync["source"], sync["dest"]
 		end
