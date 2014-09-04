@@ -14,6 +14,7 @@ fun! SetupVAM()
 					\       shellescape(c.plugin_root_dir.'/vim-addon-manager', 1)
 	endif
 	call vam#ActivateAddons([], {'auto_install' : 0})
+    call vam#ActivateAddons(['powerline'])
 endfun
 
 let g:vim_addon_manager = {'scms': {'git': {}}}
@@ -62,7 +63,6 @@ noremap <F7> :Autoformat<CR><CR>
 nmap <silent> <C-D> :NERDTreeToggle<CR>
 nmap <silent> <C-E> :TagbarToggle<CR>
 let g:NERDTreeDirArrows=0
-
 
 "map <Leader>t :call RunCurrentSpecFile()<CR>
 "map <Leader>s :call RunNearestSpec()<CR>

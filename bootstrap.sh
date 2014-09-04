@@ -25,26 +25,22 @@ case $(id -u) in
 			esac
 		done
 
+		echo "Creating Symlinks"
 		ln -s -f /vagrant/home/.vimrc /home/$USER/.vimrc
 		ln -s -f /vagrant/home/.gemrc /home/$USER/.gemrc
+		ln -s -f /vagrant/home/.gitconfig /home/$USER/.gitconfig
 		ln -s -f /vagrant/home/.tmux.conf /home/$USER/.tmux.conf
-
-		echo "Setting up Git config"
-		config="/home/$USER/.gitconfig"
-		if [ ! -f "$config" ]; then
-			wget -q -nc https://raw.githubusercontent.com/durdn/cfg/master/.gitconfig -O "$config"
-			if [ ! -z "$git_name" ]; then
-				git config --global user.name "$git_name"
-				git config --global user.email "$git_email"
-			fi
-		fi
-
 		mkdir -p /home/$USER/.vim/
 
-		echo "Creating Symlinks"
+		if [ ! -z "$git_name" ]; then
+			echo "Setting up Git config"
+			git config --global user.name "$git_name"
+			git config --global user.email "$git_email"
+		fi
+
 		chown -R $USER:$USER /home/$USER/.nvm/
 		chown -R $USER:$USER /home/$USER/.vim/
-		chown $USER:$USER /home/$USER/.vimrc
+		chown $USER:$USER /home/$USER/*
 
 		if ! hash nodemon 2>/dev/null; then
 			echo "Installing node modules"
@@ -57,12 +53,21 @@ case $(id -u) in
 				npm config --global set proxy $proxy
 				npm config --global set https-proxy $proxy
 			fi
-			npm install --loglevel error -g nodemon mocha grunt-cli js-beautify grunt-init
+			npm install --loglevel error -g nodemon mocha grunt-cli js-beautify grunt-init cucumber
 		fi
+
 		if [ ! -d /home/$USER/.grunt-init/ ]; then
 			echo "Installing grunt-init-node"
 			git clone https://github.com/gruntjs/grunt-init-node.git /home/$USER/.grunt-init/node
 			chown -R $USER:$USER /home/$USER/.grunt-init/
+		fi
+
+		if ! hash wemux 2>/dev/null; then
+			echo "Installing wemux"
+			git clone git://github.com/zolrath/wemux.git /usr/local/share/wemux
+			ln -s /usr/local/share/wemux/wemux /usr/local/bin/wemux
+			cp /usr/local/share/wemux/wemux.conf.example /usr/local/etc/wemux.conf
+			echo "Please edit the '/usr/local/etc/wemux.conf' to add users to the host_list"
 		fi
 
 		if ! hash tmux-mem-cpu-load 2>/dev/null; then
