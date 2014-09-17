@@ -23,7 +23,7 @@ hosts                | no       | An array of `{ip, names}` where `names` is an 
     "git": {
         "user": {
             "name": "James Allen",
-            "email": "code@james-allen.co.uk"
+            "email": "someone@somewhere.com"
         }
     },
     "proxy": {

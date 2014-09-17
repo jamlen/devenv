@@ -1,0 +1,12 @@
+{
+  "syncedFolders": [{
+    "source": "../nodejs",
+    "dest": "/usr/src/nodejs"
+  }],
+  "git": {
+    "user": {
+      "name": "James Allen",
+      "email": "someone@somewhere.com"
+    }
+  }
+}
