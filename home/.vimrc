@@ -25,7 +25,7 @@ endfun
 let g:vim_addon_manager.scms.git.clone=['MyGitCheckout']
 
 call SetupVAM()
-VAMActivate The_NERD_tree jellybeans vim-addon-commenting github:geekjuice/vim-spec vim-autoformat github:sickill/vim-monokai tlib vim-snippets snipmate matchit.zip github:airblade/vim-gitgutter Tagbar powerline fugitive github:editorconfig/editorconfig-vim
+VAMActivate The_NERD_tree jellybeans vim-addon-commenting github:geekjuice/vim-spec vim-autoformat github:sickill/vim-monokai tlib vim-snippets snipmate matchit.zip github:airblade/vim-gitgutter Tagbar powerline fugitive github:editorconfig/editorconfig-vim github:tpope/vim-cucumber github:digitaltoad/vim-jade
 
 
 colorscheme jellybeans

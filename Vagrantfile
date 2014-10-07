@@ -14,6 +14,7 @@ setup = JSON.load(IO.read(config_file));
 
 def bootstrap_args (setup)
 	args = []
+	return args if setup.to_s == ''
 	args.push('-n', setup["git"]["user"]["name"])
 	args.push('-e', setup["git"]["user"]["email"])
 	if setup.has_key? "npm" and setup["npm"].has_key? "useSystemProxy" and setup["npm"]["useSystemProxy"] and ENV.has_key? "http_proxy"	
