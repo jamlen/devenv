@@ -2,6 +2,16 @@
 
 A base development environment
 
+## Vagrant Plugins
+
+The following Vagrant plugins are required. Install with `vagrant plugin install <plugin name>`
+
+```
+vagrant-hosts (2.2.0)
+vagrant-proxyconf (1.3.2)
+ventriloquist (0.6.0)     
+```
+
 ## config.json
 
 You can specify a config file to use, or it will default to `config.json`. The options supported are:
