@@ -42,6 +42,18 @@ case $(id -u) in
 		chown -R $USER:$USER /home/$USER/.vim/
 		chown $USER:$USER /home/$USER/*
 
+		if ! hash nvm 2>/dev/null; then
+			echo "Installing nvm"
+			curl --silent https://raw.githubusercontent.com/creationix/nvm/v0.17.2/install.sh | bash
+			source ~/.nvm/nvm.sh
+			if ! grep -qe "^source ~/.nvm/nvm.sh$" ~/.bashrc; then
+				echo "source ~/.nvm/nvm.sh" >> ~/.bashrc
+				echo "nvm use 0.10" >> ~/.bashrc
+			fi
+			nvm install 0.10
+			nvm use 0.10
+		fi
+
 		if ! hash nodemon 2>/dev/null; then
 			echo "Installing node modules"
 			if [ ! -z "$registry" ]; then
@@ -60,14 +72,6 @@ case $(id -u) in
 			echo "Installing grunt-init-node"
 			git clone https://github.com/gruntjs/grunt-init-node.git /home/$USER/.grunt-init/node
 			chown -R $USER:$USER /home/$USER/.grunt-init/
-		fi
-
-		if ! hash wemux 2>/dev/null; then
-			echo "Installing wemux"
-			git clone git://github.com/zolrath/wemux.git /usr/local/share/wemux
-			ln -s /usr/local/share/wemux/wemux /usr/local/bin/wemux
-			cp /usr/local/share/wemux/wemux.conf.example /usr/local/etc/wemux.conf
-			echo "Please edit the '/usr/local/etc/wemux.conf' to add users to the host_list"
 		fi
 
 		if ! hash tmux-mem-cpu-load 2>/dev/null; then
