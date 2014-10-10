@@ -78,6 +78,12 @@ case $(id -u) in
 			make
 			sudo make install
 		fi
+
+		if ! hash http 2>/dev/null; then
+			echo "Installing HTTP (human readable version of CURL)"
+			pip install --upgrade httpie
+			echo "Done - see https://github.com/jakubroztocil/httpie"
+		fi
 		;;
 esac
 
