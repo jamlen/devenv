@@ -85,7 +85,7 @@ case $(id -u) in
 
 		if ! hash http 2>/dev/null; then
 			echo "Installing HTTP (human readable version of CURL)"
-			pip install --upgrade httpie
+			sudo pip install --upgrade httpie
 			echo "Done - see https://github.com/jakubroztocil/httpie"
 		fi
 		;;

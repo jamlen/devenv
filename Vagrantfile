@@ -58,7 +58,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	end
 
 	config.vm.provision :ventriloquist do |env|
-		env.platforms << %w( nodejs-0.10 )
 		env.packages << %w( tmux build-essential checkinstall exuberant-ctags curl python-pip vim-nox git-flow cmake dstat gnuplot gdb unzip )
 	end
 
