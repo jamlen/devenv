@@ -32,6 +32,7 @@ hosts                | no       | An array of `{ip, names}` where `names` is an 
 ```json
 {
     "git": {
+        "version": "2.1.2",
         "user": {
             "name": "James Allen",
             "email": "someone@somewhere.com"
