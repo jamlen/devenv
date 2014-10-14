@@ -4,6 +4,7 @@
     "dest": "/usr/src/nodejs"
   }],
   "git": {
+    "version": "2.1.2",
     "user": {
       "name": "James Allen",
       "email": "someone@somewhere.com"

@@ -16,6 +16,7 @@ def bootstrap_args (setup)
 	args = []
 	return args if setup.to_s == ''
 	args.push('-n', setup["git"]["user"]["name"])
+	args.push('-v', setup["git"]["version"])
 	args.push('-e', setup["git"]["user"]["email"])
 	if setup.has_key? "npm" and setup["npm"].has_key? "useSystemProxy" and setup["npm"]["useSystemProxy"] and ENV.has_key? "http_proxy"	
 		args.push('-p', ENV['http_proxy']) 
@@ -28,7 +29,7 @@ end
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	config.vm.hostname    = "devenv"
-	config.vm.box         = "chef/debian-7.4"
+	config.vm.box         = "chef/debian-7.6"
 	config.vm.network       "private_network", ip: "192.168.56.2"
 	if setup.has_key? 'syncedFolders'
 		setup["syncedFolders"].each do |sync|
@@ -57,8 +58,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 		config.proxy.no_proxy = ENV['no_proxy']
 	end
 
+    config.vm.provision :file, source: "~/.vimrc", destination: "~/.vimrc"
+    config.vm.provision :file, source: "~/.gemrc", destination: "~/.gemrc"
+    config.vm.provision :file, source: "~/.tmux.conf", destination: "~/.tmux.conf"
+    config.vm.provision :file, source: "~/.gitconfig", destination: "~/.gitconfig"
+
 	config.vm.provision :ventriloquist do |env|
-		env.packages << %w( tmux build-essential checkinstall exuberant-ctags curl python-pip vim-nox git-flow cmake dstat gnuplot gdb unzip )
+		env.packages << %w( tmux build-essential libssl-dev libcurl4-gnutls-dev libexpat1-dev gettext libz-dev checkinstall exuberant-ctags curl python-pip vim-nox cmake dstat gnuplot gdb unzip )
 	end
 
 	args = bootstrap_args setup

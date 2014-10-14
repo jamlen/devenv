@@ -18,6 +18,7 @@ You can specify a config file to use, or it will default to `config.json`. The o
 
 option               | required | comments
 -------------------- |:--------:|---------
+git.version          | yes      | The version of git to install from source (recommend `2.1.2`)
 git.user.name        | yes      |  
 git.user.email       | yes      |  
 syncedFolders        | no       | An array of `{source, dest}`
