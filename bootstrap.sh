@@ -10,8 +10,10 @@ case $(id -u) in
 		sudo -u vagrant -i $0 "$@" # script calling itself as the vagrant user
 		;;
 	*) 
-		while getopts ":n:e:r:p:" opt; do
+		while getopts ":v:n:e:r:p:" opt; do
 			case $opt in
+				v) git_version="$OPTARG"
+					;;
 				n) git_name="$OPTARG"
 					;;
 				e) git_email="$OPTARG"
@@ -24,12 +26,10 @@ case $(id -u) in
 					;;
 			esac
 		done
-
-		echo "Creating Symlinks"
-		ln -s -f /vagrant/home/.vimrc /home/$USER/.vimrc
-		ln -s -f /vagrant/home/.gemrc /home/$USER/.gemrc
-		ln -s -f /vagrant/home/.gitconfig /home/$USER/.gitconfig
-		ln -s -f /vagrant/home/.tmux.conf /home/$USER/.tmux.conf
+		if ! git --version | grep -q $git_version; then
+			echo "Installing git v$git_version"
+			(cd /tmp; wget –quiet https://www.kernel.org/pub/software/scm/git/git-$git_version.tar.gz; tar -zxf git-$git_version.tar.gz; cd git-$git_version; make prefix=/usr/local all; sudo make prefix=/usr/local install;)
+		fi
 		mkdir -p /home/$USER/.vim/
 
 		if [ ! -z "$git_name" ]; then
@@ -38,19 +38,15 @@ case $(id -u) in
 			git config --global user.email "$git_email"
 		fi
 
-		chown -R $USER:$USER /home/$USER/.nvm/
-		chown -R $USER:$USER /home/$USER/.vim/
-		chown $USER:$USER /home/$USER/*
-
 		if ! hash nvm 2>/dev/null; then
 			echo "Installing nvm"
-			curl --silent https://raw.githubusercontent.com/creationix/nvm/v0.17.2/install.sh | bash
+			curl --silent https://raw.githubusercontent.com/creationix/nvm/v0.17.2/install.sh | bash 2>/dev/null
 			source ~/.nvm/nvm.sh
 			if ! grep -qe "^source ~/.nvm/nvm.sh$" ~/.bashrc; then
 				echo "source ~/.nvm/nvm.sh" >> ~/.bashrc
 				echo "nvm use 0.10" >> ~/.bashrc
 			fi
-			nvm install 0.10
+			nvm install 0.10 2>/dev/null
 			nvm use 0.10
 		fi
 
@@ -85,7 +81,7 @@ case $(id -u) in
 
 		if ! hash http 2>/dev/null; then
 			echo "Installing HTTP (human readable version of CURL)"
-			pip install --upgrade httpie
+			sudo pip install --upgrade httpie
 			echo "Done - see https://github.com/jakubroztocil/httpie"
 		fi
 		;;
