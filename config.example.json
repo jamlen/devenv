@@ -1,7 +1,10 @@
 {
   "syncedFolders": [{
-    "source": "../nodejs",
-    "dest": "/usr/src/nodejs"
+    "source": "../dev",
+    "dest": "/usr/src/dev"
+  }, {
+    "source": "../dev/test-project",
+    "dest": "/usr/src/test"
   }],
   "git": {
     "version": "2.1.2",
@@ -9,5 +12,16 @@
       "name": "James Allen",
       "email": "someone@somewhere.com"
     }
-  }
+  },
+  "proxy": {
+    "useSystemProxy": true
+  },
+  "npm": {
+    "useSystemProxy": true,
+    "registry": "http://mynpmregistry.org/"
+  },
+  "hosts": [{
+    "ip": "192.168.1.25",
+    "names": ["somednsname.local", "somednsname"]
+  }]
 }

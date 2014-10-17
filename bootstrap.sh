@@ -26,9 +26,11 @@ case $(id -u) in
 					;;
 			esac
 		done
-		if ! git --version | grep -q $git_version; then
-			echo "Installing git v$git_version"
-			(cd /tmp; wget –quiet https://www.kernel.org/pub/software/scm/git/git-$git_version.tar.gz; tar -zxf git-$git_version.tar.gz; cd git-$git_version; make prefix=/usr/local all; sudo make prefix=/usr/local install;)
+		if [ ! -z "$git_version" ]; then
+			if ! git --version | grep -q $git_version; then
+				echo "Installing git v$git_version"
+				(cd /tmp; wget –quiet https://www.kernel.org/pub/software/scm/git/git-$git_version.tar.gz; tar -zxf git-$git_version.tar.gz; cd git-$git_version; make prefix=/usr/local all; sudo make prefix=/usr/local install;)
+			fi
 		fi
 		mkdir -p /home/$USER/.vim/
 

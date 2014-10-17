@@ -15,14 +15,19 @@ setup = JSON.load(IO.read(config_file));
 def bootstrap_args (setup)
 	args = []
 	return args if setup.to_s == ''
+
 	args.push('-n', setup["git"]["user"]["name"])
-	args.push('-v', setup["git"]["version"])
 	args.push('-e', setup["git"]["user"]["email"])
+	if setup["git"].has_key? "version"
+		args.push('-v', setup["git"]["version"])
+	end
+
 	if setup.has_key? "npm" and setup["npm"].has_key? "useSystemProxy" and setup["npm"]["useSystemProxy"] and ENV.has_key? "http_proxy"	
 		args.push('-p', ENV['http_proxy']) 
 	else
 		args.push('-p', 'null') 
 	end
+
 	args.push('-r', setup["npm"]["registry"]) if setup.has_key? "npm" and setup["npm"].has_key? "registry"
 	args
 end
@@ -58,10 +63,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 		config.proxy.no_proxy = ENV['no_proxy']
 	end
 
-    config.vm.provision :file, source: "~/.vimrc", destination: "~/.vimrc"
-    config.vm.provision :file, source: "~/.gemrc", destination: "~/.gemrc"
-    config.vm.provision :file, source: "~/.tmux.conf", destination: "~/.tmux.conf"
-    config.vm.provision :file, source: "~/.gitconfig", destination: "~/.gitconfig"
+	config.vm.provision :file, source: "./home/.vimrc", destination: "~/.vimrc"
+	config.vm.provision :file, source: "./home/.gemrc", destination: "~/.gemrc"
+	config.vm.provision :file, source: "./home/.tmux.conf", destination: "~/.tmux.conf"
+	config.vm.provision :file, source: "./home/.gitconfig", destination: "~/.gitconfig"
 
 	config.vm.provision :ventriloquist do |env|
 		env.packages << %w( tmux build-essential libssl-dev libcurl4-gnutls-dev libexpat1-dev gettext libz-dev checkinstall exuberant-ctags curl python-pip vim-nox cmake dstat gnuplot gdb unzip )

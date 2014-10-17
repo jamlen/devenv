@@ -18,9 +18,9 @@ You can specify a config file to use, or it will default to `config.json`. The o
 
 option               | required | comments
 -------------------- |:--------:|---------
-git.version          | yes      | The version of git to install from source (recommend `2.1.2`)
 git.user.name        | yes      |  
 git.user.email       | yes      |  
+git.version          | no       | The version of git to install from source (recommend `2.1.2`)
 syncedFolders        | no       | An array of `{source, dest}`
 proxy.useSystemProxy | no       |
 npm.useSystemProxy   | no       |
@@ -31,6 +31,13 @@ hosts                | no       | An array of `{ip, names}` where `names` is an 
 
 ```json
 {
+    "syncedFolders": [{
+        "source": "../dev",
+        "dest": "/usr/src/dev"
+    }, {
+        "source": "../dev/test-project",
+        "dest": "/usr/src/test"
+    }],
     "git": {
         "version": "2.1.2",
         "user": {
@@ -44,7 +51,11 @@ hosts                | no       | An array of `{ip, names}` where `names` is an 
     "npm": {
         "useSystemProxy": true,
         "registry": "http://mynpmregistry.org/"
-    }
+    },
+    "hosts": [{
+        "ip": "192.168.1.25",
+        "names": ["somednsname.local", "somednsname"]
+    }]
 }
 ```
 
