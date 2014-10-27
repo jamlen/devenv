@@ -46,7 +46,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	config.vm.provider :virtualbox do |vb|
 		vb.name = "devenv"
 		vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-		vb.customize ["modifyvm", :id, "--memory", "512"]
+		vb.customize ["modifyvm", :id, "--memory", "4096"]
 	end
 
 	if Vagrant.has_plugin?("vagrant-hosts") and setup.has_key? "hosts"
