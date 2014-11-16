@@ -30,6 +30,7 @@ VAMActivate The_NERD_tree jellybeans vim-addon-commenting github:geekjuice/vim-s
 
 colorscheme jellybeans
 
+set t_ut=
 set tabstop=4
 set softtabstop=4
 set expandtab
