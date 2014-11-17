@@ -69,7 +69,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	config.vm.provision :file, source: "./home/.gitconfig", destination: "~/.gitconfig"
 
 	config.vm.provision :ventriloquist do |env|
-		env.packages << %w( tmux build-essential libssl-dev libcurl4-gnutls-dev libexpat1-dev gettext libz-dev checkinstall exuberant-ctags curl python-pip vim-nox cmake dstat gnuplot gdb unzip )
+		env.packages << %w( tmux build-essential libssl-dev libcurl4-gnutls-dev libexpat1-dev gettext libz-dev checkinstall exuberant-ctags curl python-pip vim-nox cmake dstat gnuplot gdb unzip autoconf automake libtool )
 	end
 
 	args = bootstrap_args setup
