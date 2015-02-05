@@ -45,6 +45,21 @@ case $(id -u) in
 			git config --global user.email "$git_email"
 		fi
 
+		if ! hash docker 2>/dev/null; then
+			echo "Installing docker"
+			curl -sSL https://get.docker.com/ | sudo sh
+		fi
+
+		if ! hash fig 2>/dev/null; then
+			echo "Installing fig"
+			sudo pip install -U fig
+			#sudo curl -L https://github.com/docker/fig/releases/download/1.0.0/fig-`uname -s`-`uname -m` > /usr/local/bin/fig; sudo chmod +x /usr/local/bin/fig
+		fi
+
+		if ! grep -qe "^export TERM='xterm-256color'$"~/.bashrc; then
+			echo "export TERM='xterm-256color'" >> ~/.bashrc
+		fi
+
 		if ! hash nvm 2>/dev/null; then
 			echo "Installing nvm"
 			curl --silent https://raw.githubusercontent.com/creationix/nvm/v0.17.2/install.sh | bash 2>/dev/null
@@ -77,13 +92,11 @@ case $(id -u) in
 			chown -R $USER:$USER /home/$USER/.grunt-init/
 		fi
 
-		if ! hash tmux-mem-cpu-load 2>/dev/null; then
-			echo "Installing tmux cpu-mem"
-			git clone https://github.com/thewtex/tmux-mem-cpu-load.git /tmp/tmux
-			cd /tmp/tmux
-			cmake .
-			make
-			sudo make install
+		if ! hash wemux 2>/dev/null; then
+			echo "Installing wemux"
+			sudo git clone git://github.com/zolrath/wemux.git /usr/local/share/wemux
+			sudo ln -s /usr/local/share/wemux/wemux /usr/local/bin/wemux
+			sudo cp /vagrant/home/wemux.conf /usr/local/etc/wemux.conf
 		fi
 
 		if ! hash http 2>/dev/null; then

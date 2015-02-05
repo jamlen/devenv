@@ -46,7 +46,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	config.vm.provider :virtualbox do |vb|
 		vb.name = "jamlen-devenv"
 		vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-		vb.customize ["modifyvm", :id, "--memory", "512"]
+		vb.customize ["modifyvm", :id, "--memory", "4096"]
 	end
 
 	if Vagrant.has_plugin?("vagrant-hosts") and setup.has_key? "hosts"
@@ -69,7 +69,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	config.vm.provision :file, source: "./home/.gitconfig", destination: "~/.gitconfig"
 
 	config.vm.provision :ventriloquist do |env|
-		env.packages << %w( tmux build-essential libssl-dev libcurl4-gnutls-dev libexpat1-dev gettext libz-dev checkinstall exuberant-ctags curl python-pip vim-nox cmake dstat gnuplot gdb unzip )
+		env.packages << %w( tmux build-essential libssl-dev libcurl4-gnutls-dev libexpat1-dev gettext libz-dev checkinstall exuberant-ctags curl python-pip vim-nox cmake dstat gnuplot gdb unzip autoconf automake libtool )
 	end
 
 	args = bootstrap_args setup
