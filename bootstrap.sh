@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+#
+# TODO: Replace lots of this with reading the config.json file via jq rather than
+#       relying on arg being passed to the script
+#
+
 if [ $# -lt 1 ] ; then
 	echo "You must specify at least 1 argument."
 	exit 1

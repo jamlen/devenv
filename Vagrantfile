@@ -33,7 +33,7 @@ def bootstrap_args (setup)
 end
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-	config.vm.hostname    = "devenv"
+	config.vm.hostname    = "jamlen-devenv"
 	config.vm.box         = "chef/debian-7.6"
 	config.vm.network       "private_network", ip: "192.168.56.2"
 	if setup.has_key? 'syncedFolders'
@@ -44,7 +44,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	config.ssh.forward_agent = true
 
 	config.vm.provider :virtualbox do |vb|
-		vb.name = "devenv"
+		vb.name = "jamlen-devenv"
 		vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
 		vb.customize ["modifyvm", :id, "--memory", "512"]
 	end
